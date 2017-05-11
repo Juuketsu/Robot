@@ -5,14 +5,11 @@ class IRReceiverController
 {
   public:
     IRReceiverController();
-    void Loop();
+    int Loop();
     void Initialize();
 
   private:
-    void translateIR();
+    int translateIR();
 };
-
-
-void test();
 
 #endif

@@ -14,7 +14,6 @@ IRReceiverController::IRReceiverController()
 void IRReceiverController::Initialize()
 {
   Serial.println("IR Receiver Initialization");
-  Serial.begin(9600);
   irrecv.enableIRIn();
 }
 
@@ -22,6 +21,7 @@ int IRReceiverController::Loop()
 {
   if (irrecv.decode(&results))
   {
+
     int result = translateIR();
     irrecv.resume();
 
@@ -33,10 +33,12 @@ int IRReceiverController::Loop()
 
 int IRReceiverController::translateIR()
 {
+  Serial.println("Debug IR :");
+  Serial.println(results.value);
   switch(results.value)
   {
     // POWER
-    case 0xFFA25D:
+    case 0xFFA25D: return IRCMDPOWER;
     // FUNC/STOP
     case 0xFFE21D:
     //VOL+
@@ -82,6 +84,4 @@ int IRReceiverController::translateIR()
     // UNKOWN
     default: return IRCMDUNKNWON;
   }// End Case
-
-  delay(500); // Do not get immediate repeat
 }

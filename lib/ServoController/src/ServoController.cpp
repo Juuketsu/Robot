@@ -1,12 +1,10 @@
 #include "../../Constantes.h"
 #include "ServoController.h"
 #include <Servo.h>
-#include <IRRemote.h>
+#include <Arduino.h>
 
 Servo myservo;  // create servo object to control a servo
 // twelve servo objects can be created on most boards
-
-int pos = 0;    // variable to store the servo position
 
 ServoController::ServoController()
 {
@@ -15,18 +13,48 @@ ServoController::ServoController()
 
 void ServoController::Initialize()
 {
+
+}
+
+void ServoController::Switch()
+{
+  if(ServoController::IsOn)
+  {
+    Serial.println("Servo off");
+    ServoController::IsOn = false;
+    Off();
+  }
+  else
+  {
+    Serial.println("Servo on");
+    ServoController::IsOn = true;
+    On();
+  }
+}
+
+void ServoController::On()
+{
   myservo.attach(SERVOPIN);  // attaches the servo on pin 9 to the servo object
+}
+
+void ServoController::Off()
+{
+  myservo.detach();
 }
 
 void ServoController::Loop()
 {
-  for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
+  if(IsOn)
+  {
+
   }
-  for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
+}
+
+void ServoController::SetPos(int newPos)
+{
+  if(IsOn)
+  {
+    Position = newPos;
+    myservo.write(Position);
   }
 }

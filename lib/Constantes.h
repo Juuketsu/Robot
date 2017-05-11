@@ -20,5 +20,6 @@
 #define IRCMDUNKNWON  0
 #define IRCMD1        1
 #define IRCMD2        2
+#define IRCMDPOWER    10
 
 #endif

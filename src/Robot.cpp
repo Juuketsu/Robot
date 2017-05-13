@@ -1,12 +1,15 @@
 #include "IRReceiverController.h"
 #include "ServoController.h"
+#include "MPUController.h"
 #include <IRRemote.h>
 #include <Servo.h>
 #include <Arduino.h>
+#include <Wire.h>
 #include "../lib/Constantes.h"
 
 IRReceiverController IRController;
 ServoController Servo;
+MPUController MPU;
 
 unsigned long timer;
 
@@ -14,14 +17,15 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println("Modules initialization");
-  IRController.Initialize();
-  Servo.Initialize();
+  //IRController.Initialize();
+  //Servo.Initialize();
+  MPU.Initialize();
   timer = millis();
 }
 
 void loop()
 {
-  unsigned long current = millis();
+  /*unsigned long current = millis();
   if(current - timer > 50)
   {
     timer = current;
@@ -34,5 +38,7 @@ void loop()
       Servo.SetPos(180);
 
     Servo.Loop();
-  }
+  }*/
+
+  MPU.Loop();
 }
